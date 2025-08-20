@@ -60,8 +60,8 @@ Ajusta los archivos:
 ### 1. Clonar el proyecto y configurar el entorno
 
 ```bash
-git clone https://github.com/Xepelin-BizOps/cotizador-nextjs-app.git
-cd cotizador-nextjs-app
+git clone https://github.com/Xepelin-BizOps/Cotizador-OV.git
+cd Cotizador-OV
 ```
 
 Renombra `env.template` a `.env` con la URL de tu base de datos local o externa:
