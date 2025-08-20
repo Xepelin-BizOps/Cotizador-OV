@@ -33,13 +33,13 @@ export default function QuotesList({
   const page = Number(searchParams.get("page") || 1);
   const pageSize = Number(searchParams.get("pageSize") || 10);
 
-  const [showForm, setShowForm] = useState<{
-    data?: EditQuoteDto;
-    show: "create" | "edit" | null;
-  }>({
-    data: undefined,
-    show: null,
-  });
+    const [showForm, setShowForm] = useState<{
+      data?: EditQuoteDto;
+      show: "edit" | null;
+    }>({
+      data: undefined,
+      show: null,
+    });
   const [modalState, setModalState] = useState<{
     open: boolean;
     title: string;
@@ -50,26 +50,32 @@ export default function QuotesList({
     content: null,
   });
 
-  const debouncedSearch = debounce((value: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (value) {
-      params.set("search", value);
-    } else {
-      params.delete("search");
-    }
+    const debouncedSearch = debounce((value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (value) {
+        params.set("search", value);
+      } else {
+        params.delete("search");
+      }
 
-    params.set("page", "1"); // resetear página
+      params.set("page", "1"); // resetear página
 
-    router.replace(`?${params.toString()}`);
-  }, 500);
+      router.replace(`?${params.toString()}`);
+    }, 500);
 
-  // Show form Create or edit
-  const toggleShowForm = (
-    type: "create" | "edit" | null,
-    data?: EditQuoteDto
-  ) => {
-    setShowForm({ show: type, data: data });
-  };
+    const featureNewQuote = process.env.FEATURE_NUEVA_COTIZACION === "true";
+
+    // Show form Create or edit
+    const toggleShowForm = (
+      type: "create" | "edit" | null,
+      data?: EditQuoteDto
+    ) => {
+      if (type === "edit") {
+        setShowForm({ show: "edit", data });
+      } else {
+        setShowForm({ show: null, data: undefined });
+      }
+    };
 
   const handleOpenModal = (title: string, content: React.ReactNode) => {
     setModalState({
@@ -148,18 +154,20 @@ export default function QuotesList({
                   Enviar recordatorios
                 </Button>
               </Tooltip>
-              <Button
-                icon={<PlusOutlined className="cursor-pointer" />}
-                variant="solid"
-                color="primary"
-                onClick={() => setShowForm({ show: "create", data: undefined })}
-              >
-                Nueva Cotización
-              </Button>
-            </div>
-          </>
-        )}
-      </div>
+                {featureNewQuote && (
+                  <Button
+                    icon={<PlusOutlined className="cursor-pointer" />}
+                    variant="solid"
+                    color="primary"
+                    onClick={() => router.push('/quotes/new')}
+                  >
+                    Nueva Cotización
+                  </Button>
+                )}
+              </div>
+            </>
+          )}
+        </div>
 
       {!showForm.show && (
         <div className="mt-8">
