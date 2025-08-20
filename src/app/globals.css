@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@theme {
+    /* ACCENT */
+    --color-accent: #555eee;
+    --color-accent-active: #494bd4;
+    --color-accent-disabled: #ebeff4;
+    --color-accent-hover: #7177ed;
+    --color-accent-light: #f0eefd;
+    --color-accent-light-m: #f9fbff;
+    --color-accent-light-active: #bbbcf6;
+    --color-accent-light-hover: #d4d4f9;
+    --color-accent-mild: #7177ed;
+    --color-accent-mild-active: #555eee;
+    --color-accent-mild-hover: #898ff0;
+    --color-accent-strong: #3a3cb0;
+    --color-accent-strong-active: #1c1e69;
+    --color-accent-strong-hover: #2b2d8e;
+
+    /* COMPANION */
+    --color-companion: #c103d7;
+    --color-companion-active: #a400b6;
+    --color-companion-disabled: #ebeff4;
+    --color-companion-hover: #d929f3;
+    --color-companion-light: #ffe9ff;
+    --color-companion-light-active: #ffe9ff;
+    --color-companion-light-hover: #ffc5ff;
+    --color-companion-mild: #d929f3;
+    --color-companion-mild-active: #c103d7;
+    --color-companion-mild-hover: #ec53ff;
+    --color-companion-strong: #860392;
+    --color-companion-strong-active: #4b064f;
+    --color-companion-strong-hover: #690870;
+
+    /* SUCCESS */
+    --color-success: #008232;
+    --color-success-active: #006d26;
+    --color-success-disabled: #ebeff4;
+    --color-success-hover: #029840;
+    --color-success-light: #ddf6e3;
+    --color-success-light-active: #79d58e;
+    --color-success-light-hover: #ace5b7;
+    --color-success-mild: #029840;
+    --color-success-mild-active: #008232;
+    --color-success-mild-hover: #22ae53;
+    --color-success-strong: #01591b;
+    --color-success-strong-active: #07300c;
+    --color-success-strong-hover: #044513;
+
+    /* DANGER */
+    --color-danger: #e20000;
+    --color-danger-active: #c00000;
+    --color-danger-disabled: #ebeff4;
+    --color-danger-hover: #fe2a21;
+    --color-danger-light: #fdebea;
+    --color-danger-light-active: #ffaba9;
+    --color-danger-light-hover: #fccccc;
+    --color-danger-mild: #fe2a21;
+    --color-danger-mild-active: #e20000;
+    --color-danger-mild-hover: #ff6459;
+    --color-danger-strong: #9e0000;
+    --color-danger-strong-active: #5a0000;
+    --color-danger-strong-hover: #7d0000;
+
+    /* WARNING */
+    --color-warning: #fcb42a;
+    --color-warning-active: #e79e00;
+    --color-warning-disabled: #ebeff4;
+    --color-warning-hover: #ffd272;
+    --color-warning-light: #ffedc7;
+    --color-warning-light-active: #fcb42a;
+    --color-warning-light-hover: #ffd272;
+    --color-warning-mild: #ffd272;
+    --color-warning-mild-active: #fcb42a;
+    --color-warning-mild-hover: #ffedc7;
+    --color-warning-strong: #6c4300;
+    --color-warning-strong-active: #3d2300;
+    --color-warning-strong-hover: #543400;
+
+    /* NEUTRAL */
+    --color-neutral: #697086;
+    --color-neutral-active: #575e73;
+    --color-neutral-disabled: #ebeff4;
+    --color-neutral-hover: #7c839a;
+    --color-neutral-light: #ebeff4;
+    --color-neutral-light-active: #bac1d8;
+    --color-neutral-light-hover: #d0d8e9;
+    --color-neutral-mild: #7c839a;
+    --color-neutral-mild-active: #697086;
+    --color-neutral-mild-hover: #9197af;
+    --color-neutral-strong: #444c60;
+    --color-neutral-strong-active: #22283a;
+    --color-neutral-strong-hover: #333a4d;
+
+    /* WHITE */
+    --color-white: #ffffff;
+}
+
+html {
+    line-height: 1.5;
+}
+
+
+/* para que el tab ocupe todo el ancho */
+.custom-fullwidth-tabs .ant-tabs-nav-list {
+    display: flex;
+    width: 100%;
+}
+
+.custom-fullwidth-tabs .ant-tabs-tab {
+    flex: 1;
+    justify-content: center;
+    transition: .3s ease all;
+
+}
+
+.custom-fullwidth-tabs .ant-tabs-tab:hover {
+    background: #f0eefd;
+    border-radius: 1rem 1rem 0 0;
+}
