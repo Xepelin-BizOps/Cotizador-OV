@@ -1,0 +1,214 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+// ------- ENUMS -------
+enum ProductType {
+    PRODUCT
+    SERVICE
+}
+
+enum ClientType {
+    PERSON
+    COMPANY
+}
+
+enum ClientStatus {
+    PROSPECT
+    ACTIVE
+}
+
+enum AddressType {
+    PRIMARY
+    FACTURATION
+    SHIPPING
+}
+
+enum Country {
+    MEXICO
+    CHILE
+    ARGENTINA
+}
+
+enum UserRole {
+    ADMIN
+    USER
+    VIEWER
+}
+
+enum QuotationStatus {
+    DRAFT
+    SENT
+    REJECTED
+    CONFIRMED
+    PARTIAL_PAYMENT
+    PAID
+}
+
+// ------- CATALOGS -------
+
+model Category {
+    id          Int       @id @default(autoincrement())
+    name        String    @unique
+    description String
+    // Relación
+    Product     Product[]
+}
+
+model Currency {
+    id        Int       @id @default(autoincrement())
+    value     String    @unique
+    // relación inversa
+    products  Product[] // 1:N
+    companies Company[] // 1:N inversa
+}
+
+// ------- PRODUCTO -------
+
+model Product {
+    id               Int         @id @default(autoincrement())
+    sku              String      @unique
+    name             String
+    price            Decimal     @db.Decimal(10, 2)
+    shortDescription String
+    longDescription  String?     @db.Text
+    type             ProductType // Enums
+    // Relaciones
+    currency         Currency    @relation(fields: [currencyId], references: [id])
+    currencyId       Int
+
+    category   Category @relation(fields: [categoryId], references: [id])
+    categoryId Int
+
+    company       Company         @relation(fields: [companyId], references: [id])
+    companyId     Int
+    QuotationItem QuotationItem[]
+}
+
+// ------- Client -------
+
+model Client {
+    id Int @id @default(autoincrement())
+
+    companyId Int
+    company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+    type   ClientType
+    status ClientStatus @default(PROSPECT)
+
+    companyName String? // moral
+    industry    String?
+
+    fullName   String? // física
+    profession String?
+
+    rfc          String
+    taxRegime    String
+    cfdiUse      String
+    billingEmail String
+    phone        String?
+
+    addresses Address[] // 1-N
+    contacts  Contact[] // 1-N
+    quotes    Quotation[]
+
+    notes String?
+}
+
+model Address {
+    id     Int         @id @default(autoincrement())
+    type   AddressType
+    street String
+    city   String
+    state  String
+    zip    String
+
+    clientId Int
+    client   Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+}
+
+model Contact {
+    id       Int     @id @default(autoincrement())
+    fullName String
+    role     String
+    email    String
+    phone    String
+    whatsapp String?
+
+    clientId Int
+    client   Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+}
+
+// ----- Company -----
+
+model Company {
+    id                 Int      @id @default(autoincrement())
+    businessIdentifier String   @unique
+    country            Country
+    currencyId         Int
+    currency           Currency @relation(fields: [currencyId], references: [id])
+    companyName        String
+    address            String?
+    rfc                String?
+    email              String
+    phone              String?
+    logoUrl            String?
+
+    // Relación 1(comapny):N 
+    users    User[]
+    products Product[]
+    clients  Client[]
+    quotes   Quotation[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model User {
+    id        Int       @id @default(autoincrement())
+    email     String    @unique
+    fullName  String?
+    role      UserRole?
+    companyId Int
+    company   Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+}
+
+// ---- Cotizaciones ------
+
+model Quotation {
+    id        Int     @id @default(autoincrement())
+    companyId Int
+    company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+    clientId Int? // puede ser null si se borra el cliente
+    client   Client? @relation(fields: [clientId], references: [id], onDelete: SetNull)
+
+    items QuotationItem[] // relación 1:N con cascade implícito (por prisma no hace falta nada más)
+
+    note          String?         @db.Text
+    totalAmount   Decimal         @db.Decimal(10, 2)
+    status        QuotationStatus @default(DRAFT)
+    quotationDate DateTime        @db.Date
+    updatedAt     DateTime        @updatedAt
+    createdAt     DateTime        @default(now())
+}
+
+model QuotationItem {
+    id Int @id @default(autoincrement())
+
+    quotationId Int
+    quotation   Quotation @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+
+    productId Int
+    product   Product @relation(fields: [productId], references: [id])
+
+    productName String
+    quantity    Int
+    unitPrice   Decimal @db.Decimal(10, 2)
+    totalPrice  Decimal @db.Decimal(10, 2)
+}
