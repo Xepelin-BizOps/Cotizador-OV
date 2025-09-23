@@ -1,0 +1,29 @@
+name: Deploy - Dev
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  trigger-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Deploy
+        run: |
+          response=$(curl -X POST \
+          -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Content-Type: application/json" \
+          https://api.github.com/repos/xepelinapp/xepelin-client-application/dispatches \
+          -d '{"event_type": "Deploy external apps - Dev"}' \
+          --write-out "%{http_code}" \
+          --silent \
+          --output /dev/null)
+
+          if [ "$response" -eq 204 ]; then
+            echo "✅ Deploy triggered successfully"
+          else
+            echo "❌ Failed to trigger deploy. HTTP status: $response"
+            exit 1
+          fi
