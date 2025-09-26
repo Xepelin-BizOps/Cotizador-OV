@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Variables de color para FXepelin */
+:root {
+  --fxepelin-primary: #7c3aed;
+  --fxepelin-primary-hover: #6d28d9;
+  --fxepelin-gray-50: #f9fafb;
+  --fxepelin-gray-100: #f3f4f6;
+  --fxepelin-gray-200: #e5e7eb;
+  --fxepelin-gray-300: #d1d5db;
+  --fxepelin-gray-400: #9ca3af;
+  --fxepelin-gray-500: #6b7280;
+  --fxepelin-gray-600: #4b5563;
+  --fxepelin-gray-700: #374151;
+  --fxepelin-gray-800: #1f2937;
+  --fxepelin-gray-900: #111827;
+  --fxepelin-green-600: #059669;
+  --fxepelin-red-500: #ef4444;
+  --fxepelin-orange-500: #f97316;
+}
+
+/* Estilos específicos para FXepelin */
+.fxepelin-section {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Botones personalizados */
+.btn-primary {
+  @apply bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200;
+}
+
+.btn-outline {
+  @apply border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium py-3 px-4 rounded-lg transition-colors duration-200;
+}
+
+/* Cards */
+.card {
+  @apply bg-white rounded-lg shadow-sm border border-gray-200;
+}
+
+/* Estados de transacciones */
+.status-en-proceso {
+  @apply flex items-center gap-1 text-orange-500 text-xs;
+}
+
+.status-rechazado {
+  @apply flex items-center gap-1 text-red-500 text-xs;
+}
+
+.status-completado {
+  @apply flex items-center gap-1 text-green-600 text-xs;
+}
+
+/* Indicadores de estado */
+.status-dot {
+  @apply w-2 h-2 rounded-full;
+}
+
+.status-dot-orange {
+  @apply bg-orange-500;
+}
+
+.status-dot-red {
+  @apply bg-red-500;
+}
+
+.status-dot-green {
+  @apply bg-green-600;
+}
+
+/* Iconos de transacciones */
+.transaction-icon {
+  @apply w-4 h-4 text-gray-600;
+}
+
+.transaction-icon-international {
+  @apply w-4 h-4 text-gray-400;
+}
+
+/* Montos */
+.amount-positive {
+  @apply text-green-600 font-medium;
+}
+
+.amount-negative {
+  @apply text-gray-900 font-medium;
+}
+
+.amount-secondary {
+  @apply text-gray-400 text-sm;
+}
+
+/* Paginación */
+.pagination-button {
+  @apply w-8 h-8 hover:bg-gray-100 rounded text-sm font-medium text-gray-600 transition-colors duration-200;
+}
+
+.pagination-button-active {
+  @apply w-8 h-8 bg-purple-600 text-white rounded text-sm font-medium;
+}
+
+/* Hover effects */
+.hover-lift {
+  @apply transition-transform duration-200 hover:-translate-y-0.5;
+}
+
+/* Animaciones suaves */
+.smooth-transition {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .fxepelin-section {
+    @apply p-4;
+  }
+}
+
+@media (max-width: 768px) {
+  .fxepelin-section {
+    @apply p-2;
+  }
+}
